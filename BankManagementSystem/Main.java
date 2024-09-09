@@ -24,8 +24,10 @@ public class Main {
             switch (i) {
                 case 1:
                     createNewAcc();
+                    break;
                 case 2:
                     login();
+                    break;
             }
         } while (i != 3);
 
@@ -48,13 +50,15 @@ public class Main {
         System.out.println("Confirm Passcode:");
         int passcode_checker = scanner.nextInt();
         if (passcode != passcode_checker) {
-            System.out.println("Passcodes Not Matching!");
+            System.out.println("Passcodes Not Matching!\n");
             return;
 
         }
         int account_number = 1000000 + last_acc_id;
         last_acc_id = last_acc_id + 1;
         Account acc = new Account(firstName, lastName, proofID, proof_address, account_number, passcode, balance);
+        accounts.add(acc);
+        System.out.println("Your account id: "+ account_number);
         showMenu(acc);
     }
 
@@ -78,8 +82,19 @@ public class Main {
         }
     }
 
-    private static void showMenu(Account account) {
-        System.out.println("Welcome" + account.getFirstName()+ "!");
+    private static void showMenu(Account acc) {
+        System.out.println("Welcome" + acc.getFirstName()+ acc.getLastName());
+        System.out.println("1. Deposit\n2. Withdraw\n3. Balance");
+        int j = scanner.nextInt();
+        switch (j){
+            case 1:
+                new Deposit(scanner, acc);
+                break;
+            case 2:
+                new Withdraw(scanner, acc);
+            case 3:
+                System.out.println("Your Balance is $"+ acc.getBalance());
+        }
     }
 
 }
